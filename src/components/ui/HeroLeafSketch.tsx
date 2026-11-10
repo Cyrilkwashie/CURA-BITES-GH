@@ -1,8 +1,17 @@
+import { cn } from "@/lib/cn";
+
+type HeroLeafSketchProps = {
+  className?: string;
+};
+
 /** Line-art foliage behind the hero plate */
-export function HeroLeafSketch() {
+export function HeroLeafSketch({ className }: HeroLeafSketchProps) {
   return (
     <svg
-      className="pointer-events-none absolute left-1/2 top-1/2 h-[min(100vw,620px)] w-[min(100vw,620px)] -translate-x-1/2 -translate-y-[45%] text-charcoal/[0.12] sm:h-[540px] sm:w-[540px] lg:h-[640px] lg:w-[640px] xl:h-[720px] xl:w-[720px] 2xl:h-[800px] 2xl:w-[800px]"
+      className={cn(
+        "pointer-events-none absolute left-1/2 top-1/2 h-[min(100vw,620px)] w-[min(100vw,620px)] -translate-x-1/2 -translate-y-[45%] text-charcoal/[0.12] sm:h-[540px] sm:w-[540px] lg:h-[640px] lg:w-[640px] xl:h-[720px] xl:w-[720px] 2xl:h-[800px] 2xl:w-[800px]",
+        className,
+      )}
       viewBox="0 0 400 400"
       fill="none"
       aria-hidden

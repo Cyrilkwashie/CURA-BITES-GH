@@ -5,6 +5,8 @@ type PlateVisualProps = {
   src: string;
   alt: string;
   prominent?: boolean;
+  /** Tighter mobile frame — use in hero on small screens */
+  compactMobile?: boolean;
   priority?: boolean;
   sizes?: string;
   className?: string;
@@ -14,12 +16,15 @@ export function PlateVisual({
   src,
   alt,
   prominent = true,
+  compactMobile = false,
   priority = false,
   sizes = "(max-width: 768px) 90vw, 420px",
   className,
 }: PlateVisualProps) {
   const frameClass = prominent
-    ? "h-[min(78vw,500px)] w-[min(94vw,720px)] sm:h-[460px] sm:w-[520px] lg:h-[520px] lg:w-[640px] xl:h-[580px] xl:w-[720px] 2xl:h-[640px] 2xl:w-[820px]"
+    ? compactMobile
+      ? "h-[200px] w-[min(86vw,268px)] sm:h-[400px] sm:w-[460px] lg:h-[520px] lg:w-[640px] xl:h-[580px] xl:w-[720px] 2xl:h-[640px] 2xl:w-[820px]"
+      : "h-[min(78vw,500px)] w-[min(94vw,720px)] sm:h-[460px] sm:w-[520px] lg:h-[520px] lg:w-[640px] xl:h-[580px] xl:w-[720px] 2xl:h-[640px] 2xl:w-[820px]"
     : "h-[240px] w-[280px] sm:h-[280px] sm:w-[320px]";
 
   return (
