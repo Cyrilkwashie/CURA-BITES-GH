@@ -19,7 +19,7 @@ export function PlateVisual({
   className,
 }: PlateVisualProps) {
   const frameClass = prominent
-    ? "h-[min(78vw,500px)] w-[min(94vw,720px)] sm:h-[460px] sm:w-[520px] lg:h-[520px] lg:w-[640px] xl:h-[560px] xl:w-[720px]"
+    ? "h-[min(78vw,500px)] w-[min(94vw,720px)] sm:h-[460px] sm:w-[520px] lg:h-[520px] lg:w-[640px] xl:h-[580px] xl:w-[720px] 2xl:h-[640px] 2xl:w-[820px]"
     : "h-[240px] w-[280px] sm:h-[280px] sm:w-[320px]";
 
   return (
