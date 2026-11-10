@@ -1,31 +1,31 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, type PanInfo } from "framer-motion";
+import { motion, type PanInfo } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { MealItem } from "@/data/menuTypes";
-import { Button } from "@/components/ui/Button";
-import { images } from "@/data/images";
-import { PlateVisual } from "@/components/ui/PlateVisual";
+import { MenuItemCard } from "@/components/home/MenuItemCard";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-
+import { useReducedMotion } from "@/hooks/useReducedMotion";
+import {
+  carouselRoleStyles,
+  carouselRoleTilt,
+  getCarouselRole,
+} from "@/lib/plateCarousel";
 type MenuItemsProps = {
   items: MealItem[];
   meal: "breakfast" | "lunch";
   dayKey: string;
 };
 
-const stageColors = {
-  breakfast: "#F5E9B8",
-  lunch: "#26834A",
-} as const;
-
 export function MenuItems({ items, meal, dayKey }: MenuItemsProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const animating = useRef(false);
   const isMobile = useMediaQuery("(max-width: 767px)");
+  const reduced = useReducedMotion();
   const total = items.length;
-  const activeItem = items[activeIndex] ?? items[0];
-  const orbColor = meal === "breakfast" ? stageColors.breakfast : stageColors.lunch;
-  const orbOpacity = meal === "breakfast" ? 0.55 : 0.35;
+
+  const transition = reduced
+    ? { duration: 0 }
+    : { duration: 0.72, ease: [0.22, 1, 0.36, 1] as const };
 
   useEffect(() => {
     setActiveIndex(0);
@@ -38,169 +38,115 @@ export function MenuItems({ items, meal, dayKey }: MenuItemsProps) {
       setActiveIndex((i) => (i + dir + total) % total);
       window.setTimeout(() => {
         animating.current = false;
-      }, 450);
+      }, reduced ? 0 : 750);
     },
-    [total],
+    [total, reduced],
   );
 
   const onDragEnd = (_: unknown, info: PanInfo) => {
     if (total <= 1) return;
-    if (Math.abs(info.offset.x) > 56) {
+    if (Math.abs(info.offset.x) > 72) {
       go(info.offset.x > 0 ? -1 : 1);
     }
   };
 
-  if (!activeItem) return null;
+  const setIndex = (i: number) => {
+    if (!animating.current) setActiveIndex(i);
+  };
+
+  if (!items.length) return null;
 
   return (
-    <div className="relative">
+    <div className="relative max-md:overflow-x-clip">
       {total > 1 && (
-        <div className="mb-4 flex items-center justify-center gap-3 lg:justify-end">
+        <div className="relative z-20 mb-3 flex items-center justify-end gap-2 max-md:mb-4 sm:mb-6 lg:absolute lg:right-0 lg:top-[-4.5rem] lg:mb-0">
           <button
             type="button"
             onClick={() => go(-1)}
-            className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-forest-deep shadow-nav ring-1 ring-charcoal/8 transition hover:bg-accent-cream focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fresh sm:h-12 sm:w-12"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-forest-deep shadow-nav ring-1 ring-charcoal/8 transition hover:bg-accent-cream focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fresh sm:h-12 sm:w-12"
             aria-label="Previous menu item"
           >
-            <ChevronLeft size={20} />
+            <ChevronLeft className="max-sm:h-5 max-sm:w-5 sm:h-[22px] sm:w-[22px]" />
           </button>
           <button
             type="button"
             onClick={() => go(1)}
-            className="flex h-11 w-11 items-center justify-center rounded-full bg-forest-deep text-white shadow-nav transition hover:bg-fresh focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fresh sm:h-12 sm:w-12"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-forest-deep text-white shadow-nav transition hover:bg-fresh focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fresh sm:h-12 sm:w-12"
             aria-label="Next menu item"
           >
-            <ChevronRight size={20} />
+            <ChevronRight className="max-sm:h-5 max-sm:w-5 sm:h-[22px] sm:w-[22px]" />
           </button>
         </div>
       )}
 
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={`${meal}-${dayKey}-${activeItem.id}`}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -8 }}
-          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          className="flex flex-col gap-6 lg:grid lg:grid-cols-2 lg:items-center lg:gap-12"
-          drag={isMobile && total > 1 ? "x" : false}
-          dragConstraints={{ left: 0, right: 0 }}
-          dragElastic={0.1}
-          onDragEnd={onDragEnd}
-        >
-          <div className="relative mx-auto w-full max-w-[min(100%,360px)] overflow-hidden max-lg:sm:max-w-none lg:max-w-none lg:overflow-visible">
-            <div className="relative mx-auto h-[250px] w-full max-lg:sm:h-[380px] lg:h-[480px]">
-              <div
-                className="pointer-events-none absolute left-1/2 top-1/2 z-0 -translate-x-1/2 -translate-y-1/2 rounded-full max-lg:h-[min(70vw,230px)] max-lg:w-[min(70vw,230px)] max-lg:sm:h-[min(85vw,360px)] max-lg:sm:w-[min(85vw,360px)] lg:h-[420px] lg:w-[420px]"
-                style={{ backgroundColor: orbColor, opacity: orbOpacity }}
-                aria-hidden
-              />
-              <div
-                className="pointer-events-none absolute left-1/2 top-1/2 z-0 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-accent-yellow/70 max-lg:h-[min(78vw,250px)] max-lg:w-[min(78vw,250px)] max-lg:sm:h-[min(92vw,390px)] max-lg:sm:w-[min(92vw,390px)] lg:h-[460px] lg:w-[460px]"
-                aria-hidden
-              />
-              <p
-                className="pointer-events-none absolute left-1 top-1 font-display text-[clamp(3rem,12vw,4.5rem)] uppercase leading-none text-forest-deep/[0.06] max-lg:sm:left-3 lg:left-6 lg:text-[clamp(4rem,8vw,6rem)]"
-                aria-hidden
-              >
-                {String(activeIndex + 1).padStart(2, "0")}
-              </p>
-              <div className="relative z-10 flex h-full items-center justify-center">
-                <PlateVisual
-                  src={activeItem.image ?? images.breakfast.default}
-                  alt={activeItem.name}
-                  prominent={meal === "lunch"}
-                  compactMobile={isMobile}
-                  sizes={
-                    meal === "lunch"
-                      ? "(max-width: 640px) 268px, (max-width: 1024px) 50vw, 640px"
-                      : "(max-width: 640px) 240px, (max-width: 1024px) 50vw, 520px"
-                  }
-                  className={
-                    meal === "breakfast"
-                      ? "max-lg:h-[200px] max-lg:w-[280px] max-lg:sm:h-[240px] max-lg:sm:w-[320px]"
-                      : undefined
-                  }
-                />
-              </div>
-            </div>
-          </div>
+      <div className="relative mx-auto w-full min-w-0 max-w-full">
+        <div className="relative mx-auto w-full max-md:h-auto md:h-[500px] lg:h-[580px] xl:h-[620px]">
+          <div
+            className="relative z-10 mx-auto w-full min-w-0 max-w-[min(100%,720px)] max-md:px-0 md:h-full md:px-4 lg:max-w-[800px]"
+            style={{ perspective: 1400 }}
+          >
+              {items.map((item, index) => {
+                const role = getCarouselRole(index, activeIndex, total);
+                const styles = carouselRoleStyles(
+                  role,
+                  isMobile,
+                  index,
+                  activeIndex,
+                  total,
+                );
+                const isActive = role === "active";
 
-          <div className="text-center lg:text-left">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-fresh">
-              {meal === "breakfast" ? "Breakfast" : "Lunch"} · {total} items today
-            </p>
-            <h3 className="mt-2 font-display text-3xl uppercase leading-[0.95] text-forest-deep sm:text-4xl lg:text-[2.75rem]">
-              {activeItem.name}
-            </h3>
-            {activeItem.description && (
-              <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-charcoal/75 sm:text-base lg:mx-0">
-                {activeItem.description}
-              </p>
-            )}
-            <Button
-              size="md"
-              variant="ghost"
-              className="mt-5 !px-0 text-fresh hover:bg-transparent hover:underline lg:mt-6"
-              onClick={() => {
-                /* ordering — future phase */
-              }}
-            >
-              Add to order — coming soon
-            </Button>
+                if (isMobile && !isActive) return null;
+
+                return (
+                  <motion.div
+                    key={`${dayKey}-${item.id}`}
+                    className="flex w-full min-w-0 justify-center max-md:relative max-md:touch-pan-y md:absolute md:inset-0 md:items-center md:px-1"
+                    style={{
+                      zIndex: styles.zIndex as number,
+                      transformStyle: "preserve-3d",
+                    }}
+                    animate={{
+                      x: isMobile ? 0 : styles.x,
+                      scale: isMobile ? 1 : styles.scale,
+                      opacity: isMobile ? 1 : styles.opacity,
+                      rotateY: carouselRoleTilt(role, isMobile),
+                      y: isActive && !isMobile ? -6 : 0,
+                    }}
+                    transition={transition}
+                    drag={isMobile && isActive && total > 1 ? "x" : false}
+                    dragConstraints={{ left: 0, right: 0 }}
+                    dragElastic={0.12}
+                    onDragEnd={isActive ? onDragEnd : undefined}
+                  >
+                    <MenuItemCard item={item} meal={meal} />
+                  </motion.div>
+                );
+              })}
           </div>
-        </motion.div>
-      </AnimatePresence>
+        </div>
+      </div>
 
       {total > 1 && (
-        <>
-          <ul
-            className="mt-6 flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] sm:mt-8 [&::-webkit-scrollbar]:hidden"
-            role="tablist"
-            aria-label="Menu items"
-          >
-            {items.map((item, i) => {
-              const active = i === activeIndex;
-              return (
-                <li key={item.id} className="shrink-0">
-                  <button
-                    type="button"
-                    role="tab"
-                    aria-selected={active}
-                    onClick={() => setActiveIndex(i)}
-                    className={`rounded-full px-4 py-2 text-xs font-semibold transition sm:text-sm ${
-                      active
-                        ? "bg-forest-deep text-white shadow-sm"
-                        : "bg-white text-charcoal/80 ring-1 ring-charcoal/12 hover:ring-forest-deep/25"
-                    }`}
-                  >
-                    {item.name}
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-
-          <div
-            className="mt-4 flex justify-center gap-2 max-lg:flex lg:hidden"
-            role="tablist"
-            aria-label="Menu slides"
-          >
-            {items.map((item, i) => (
-              <button
-                key={item.id}
-                type="button"
-                role="tab"
-                aria-selected={i === activeIndex}
-                aria-label={`Show ${item.name}`}
-                onClick={() => setActiveIndex(i)}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  i === activeIndex ? "w-8 bg-accent-yellow" : "w-2 bg-charcoal/25"
-                }`}
-              />
-            ))}
-          </div>
-        </>
+        <div
+          className="mt-4 flex max-w-full flex-wrap justify-center gap-2 px-1 sm:mt-6 lg:hidden"
+          role="tablist"
+          aria-label="Menu slides"
+        >
+          {items.map((item, i) => (
+            <button
+              key={item.id}
+              type="button"
+              role="tab"
+              aria-selected={i === activeIndex}
+              aria-label={`Show ${item.name}`}
+              onClick={() => setIndex(i)}
+              className={`h-2 rounded-full transition-all duration-300 ${
+                i === activeIndex ? "w-8 bg-accent-yellow" : "w-2 bg-charcoal/25"
+              }`}
+            />
+          ))}
+        </div>
       )}
     </div>
   );

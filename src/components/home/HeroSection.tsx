@@ -27,9 +27,9 @@ export function HeroSection({ onExploreMeal }: HeroSectionProps) {
       </div>
 
       <div className="relative mx-auto flex w-full max-w-[90rem] flex-1 flex-col justify-start gap-6 px-4 py-6 max-lg:sm:justify-center sm:px-8 sm:py-10 lg:flex-row lg:items-center lg:justify-center lg:gap-10 lg:px-12 lg:py-14 xl:gap-16 xl:px-16 2xl:gap-20 2xl:px-24 2xl:py-16">
-        <div className="z-10 flex w-full flex-1 flex-col justify-center lg:max-w-none lg:pr-4 xl:pr-8 2xl:pr-12">
+        <div className="z-10 flex w-full flex-1 flex-col justify-center lg:max-w-xl lg:pr-4 xl:max-w-2xl xl:pr-8">
           <motion.p
-            className="text-[0.65rem] font-bold uppercase tracking-[0.18em] text-fresh max-lg:sm:text-xs lg:text-xs lg:tracking-[0.22em] xl:text-base xl:tracking-[0.28em]"
+            className="text-[0.65rem] font-bold uppercase tracking-[0.18em] text-fresh max-lg:sm:text-xs lg:text-xs lg:tracking-[0.24em]"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: dur(0.5), delay: dur(0.1), ease }}
@@ -38,7 +38,7 @@ export function HeroSection({ onExploreMeal }: HeroSectionProps) {
           </motion.p>
 
           <motion.div
-            className="mt-3 hidden gap-2 max-lg:sm:mt-4 max-lg:sm:flex max-lg:sm:gap-2.5 lg:mt-4 lg:flex lg:gap-2.5 xl:mt-5 xl:gap-3"
+            className="mt-4 hidden gap-2 max-lg:sm:flex max-lg:sm:gap-2.5 lg:mt-5 lg:flex lg:gap-2.5"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: dur(0.25), duration: dur(0.4) }}
@@ -47,13 +47,13 @@ export function HeroSection({ onExploreMeal }: HeroSectionProps) {
             {[0, 1, 2].map((i) => (
               <span
                 key={i}
-                className="inline-block h-2 w-2 rotate-45 bg-accent-yellow xl:h-3 xl:w-3"
+                className="inline-block h-2 w-2 rotate-45 bg-accent-yellow"
               />
             ))}
           </motion.div>
 
           <motion.h1
-            className="text-balance mt-3 font-display uppercase leading-[0.98] text-charcoal lg:mt-5 lg:max-w-4xl lg:text-[clamp(2.85rem,4.2vw,4.5rem)] xl:mt-8 xl:max-w-5xl xl:text-[clamp(3.5rem,3.8vw,5.25rem)] 2xl:max-w-6xl 2xl:text-[5.75rem]"
+            className="text-balance mt-4 font-display uppercase leading-[1.06] text-charcoal max-lg:sm:mt-5 lg:mt-6 lg:text-[clamp(2.35rem,3.1vw,3.25rem)] xl:text-[clamp(2.5rem,2.8vw,3.75rem)]"
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: dur(0.75), delay: dur(0.15), ease }}
@@ -63,14 +63,14 @@ export function HeroSection({ onExploreMeal }: HeroSectionProps) {
               <span className="block">Busy Lives.</span>
               <span className="block text-fresh">Sorted.</span>
             </span>
-            <span className="hidden lg:inline">
-              Delicious Foods With Wonderful{" "}
-              <span className="text-fresh">Sorted.</span>
+            <span className="hidden lg:block">
+              <span className="block">Delicious Foods With Wonderful</span>
+              <span className="mt-1 block text-fresh">Sorted.</span>
             </span>
           </motion.h1>
 
           <motion.p
-            className="mt-3 max-w-sm text-sm leading-snug text-charcoal/70 max-lg:sm:mt-6 max-lg:sm:max-w-xl max-lg:sm:text-base max-lg:sm:leading-relaxed max-lg:sm:text-charcoal/65 lg:mt-6 lg:max-w-2xl lg:text-lg xl:mt-10 xl:max-w-2xl xl:text-xl xl:leading-relaxed 2xl:max-w-3xl 2xl:text-[1.35rem]"
+            className="mt-6 max-w-sm text-sm leading-relaxed text-charcoal/70 max-lg:sm:mt-6 max-lg:sm:max-w-md max-lg:sm:text-base lg:mt-7 lg:max-w-md lg:text-base lg:leading-relaxed lg:text-charcoal/65"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: dur(0.5), delay: dur(0.35), ease }}
@@ -79,7 +79,7 @@ export function HeroSection({ onExploreMeal }: HeroSectionProps) {
           </motion.p>
 
           <motion.div
-            className="mt-5 flex flex-row gap-2 max-lg:sm:mt-9 max-lg:sm:gap-3 xl:mt-12 xl:gap-4"
+            className="mt-8 flex flex-row gap-3 max-lg:sm:mt-9 lg:mt-10"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: dur(0.5), delay: dur(0.5), ease }}
@@ -87,14 +87,14 @@ export function HeroSection({ onExploreMeal }: HeroSectionProps) {
             <Button
               size="lg"
               variant="secondary"
-              className="max-lg:min-h-[44px] max-lg:flex-1 max-lg:rounded-full max-lg:px-5 max-lg:text-xs lg:flex-none lg:rounded-full lg:px-9 xl:min-h-[3.5rem] xl:px-12 xl:text-base"
+              className="max-lg:min-h-[44px] max-lg:flex-1 max-lg:rounded-full max-lg:px-5 max-lg:text-xs lg:flex-none lg:rounded-full lg:px-9"
               onClick={() => scrollToSection("menu")}
             >
               Menu
             </Button>
             <Button
               size="lg"
-              className="max-lg:min-h-[44px] max-lg:flex-1 max-lg:rounded-full max-lg:px-5 max-lg:text-xs lg:flex-none lg:rounded-full lg:px-9 xl:min-h-[3.5rem] xl:px-12 xl:text-base"
+              className="max-lg:min-h-[44px] max-lg:flex-1 max-lg:rounded-full max-lg:px-5 max-lg:text-xs lg:flex-none lg:rounded-full lg:px-9"
               onClick={() => {
                 if (onExploreMeal) onExploreMeal("breakfast");
                 else scrollToSection("menu");

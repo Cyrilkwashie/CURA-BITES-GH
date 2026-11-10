@@ -25,7 +25,7 @@ export function DailyMenu({
   return (
     <section
       id="menu"
-      className={`section-padding ${
+      className={`section-padding overflow-x-clip max-md:overflow-x-hidden ${
         meal === "breakfast" ? "bg-accent-cream" : "bg-white"
       }`}
     >
@@ -45,7 +45,7 @@ export function DailyMenu({
           <WeekdaySelector value={weekday} onChange={onWeekdayChange} />
         </div>
 
-        <div className="mt-10">
+        <div className="relative mt-6 min-w-0 sm:mt-10 lg:mt-8">
           <MenuItems items={items} meal={meal} dayKey={weekday} />
         </div>
       </div>
