@@ -23,7 +23,7 @@ export function PlateVisual({
 }: PlateVisualProps) {
   const frameClass = prominent
     ? compactMobile
-      ? "h-[200px] w-[min(86vw,268px)] sm:h-[400px] sm:w-[460px] lg:h-[520px] lg:w-[640px] xl:h-[580px] xl:w-[720px] 2xl:h-[640px] 2xl:w-[820px]"
+      ? "h-[200px] w-[min(86vw,268px)] max-lg:h-[min(72vw,280px)] max-lg:w-[min(86vw,300px)] lg:h-[520px] lg:w-[640px] xl:h-[580px] xl:w-[720px] 2xl:h-[640px] 2xl:w-[820px]"
       : "h-[min(78vw,500px)] w-[min(94vw,720px)] sm:h-[460px] sm:w-[520px] lg:h-[520px] lg:w-[640px] xl:h-[580px] xl:w-[720px] 2xl:h-[640px] 2xl:w-[820px]"
     : "h-[240px] w-[280px] sm:h-[280px] sm:w-[320px]";
 

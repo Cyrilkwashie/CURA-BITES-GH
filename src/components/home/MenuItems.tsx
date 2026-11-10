@@ -21,7 +21,7 @@ const stageColors = {
 export function MenuItems({ items, meal, dayKey }: MenuItemsProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const animating = useRef(false);
-  const isMobile = useMediaQuery("(max-width: 1023px)");
+  const isMobile = useMediaQuery("(max-width: 767px)");
   const total = items.length;
   const activeItem = items[activeIndex] ?? items[0];
   const orbColor = meal === "breakfast" ? stageColors.breakfast : stageColors.lunch;
@@ -55,7 +55,7 @@ export function MenuItems({ items, meal, dayKey }: MenuItemsProps) {
   return (
     <div className="relative">
       {total > 1 && (
-        <div className="mb-4 flex items-center justify-center gap-3 sm:justify-end">
+        <div className="mb-4 flex items-center justify-center gap-3 lg:justify-end">
           <button
             type="button"
             onClick={() => go(-1)}
@@ -88,19 +88,19 @@ export function MenuItems({ items, meal, dayKey }: MenuItemsProps) {
           dragElastic={0.1}
           onDragEnd={onDragEnd}
         >
-          <div className="relative mx-auto w-full max-w-[min(100%,360px)] overflow-hidden sm:max-w-none">
-            <div className="relative mx-auto h-[250px] w-full sm:h-[380px] lg:h-[440px]">
+          <div className="relative mx-auto w-full max-w-[min(100%,360px)] overflow-hidden max-lg:sm:max-w-none lg:max-w-none lg:overflow-visible">
+            <div className="relative mx-auto h-[250px] w-full max-lg:sm:h-[380px] lg:h-[480px]">
               <div
-                className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-[min(70vw,230px)] w-[min(70vw,230px)] -translate-x-1/2 -translate-y-1/2 rounded-full sm:h-[min(85vw,360px)] sm:w-[min(85vw,360px)] lg:h-[400px] lg:w-[400px]"
+                className="pointer-events-none absolute left-1/2 top-1/2 z-0 -translate-x-1/2 -translate-y-1/2 rounded-full max-lg:h-[min(70vw,230px)] max-lg:w-[min(70vw,230px)] max-lg:sm:h-[min(85vw,360px)] max-lg:sm:w-[min(85vw,360px)] lg:h-[420px] lg:w-[420px]"
                 style={{ backgroundColor: orbColor, opacity: orbOpacity }}
                 aria-hidden
               />
               <div
-                className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-[min(78vw,250px)] w-[min(78vw,250px)] -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-accent-yellow/70 sm:h-[min(92vw,390px)] sm:w-[min(92vw,390px)] lg:h-[440px] lg:w-[440px]"
+                className="pointer-events-none absolute left-1/2 top-1/2 z-0 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-accent-yellow/70 max-lg:h-[min(78vw,250px)] max-lg:w-[min(78vw,250px)] max-lg:sm:h-[min(92vw,390px)] max-lg:sm:w-[min(92vw,390px)] lg:h-[460px] lg:w-[460px]"
                 aria-hidden
               />
               <p
-                className="pointer-events-none absolute left-1 top-1 font-display text-[clamp(3rem,12vw,4.5rem)] uppercase leading-none text-forest-deep/[0.06] sm:left-3 lg:left-6"
+                className="pointer-events-none absolute left-1 top-1 font-display text-[clamp(3rem,12vw,4.5rem)] uppercase leading-none text-forest-deep/[0.06] max-lg:sm:left-3 lg:left-6 lg:text-[clamp(4rem,8vw,6rem)]"
                 aria-hidden
               >
                 {String(activeIndex + 1).padStart(2, "0")}
@@ -113,12 +113,12 @@ export function MenuItems({ items, meal, dayKey }: MenuItemsProps) {
                   compactMobile={isMobile}
                   sizes={
                     meal === "lunch"
-                      ? "(max-width: 640px) 268px, (max-width: 1024px) 50vw, 520px"
-                      : "(max-width: 640px) 240px, (max-width: 1024px) 50vw, 420px"
+                      ? "(max-width: 640px) 268px, (max-width: 1024px) 50vw, 640px"
+                      : "(max-width: 640px) 240px, (max-width: 1024px) 50vw, 520px"
                   }
                   className={
-                    meal === "breakfast" && !isMobile
-                      ? "h-[200px] w-[280px] sm:h-[240px] sm:w-[320px]"
+                    meal === "breakfast"
+                      ? "max-lg:h-[200px] max-lg:w-[280px] max-lg:sm:h-[240px] max-lg:sm:w-[320px]"
                       : undefined
                   }
                 />
@@ -182,7 +182,7 @@ export function MenuItems({ items, meal, dayKey }: MenuItemsProps) {
           </ul>
 
           <div
-            className="mt-4 flex justify-center gap-2"
+            className="mt-4 flex justify-center gap-2 max-lg:flex lg:hidden"
             role="tablist"
             aria-label="Menu slides"
           >

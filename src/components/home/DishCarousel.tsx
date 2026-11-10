@@ -73,7 +73,7 @@ export function DishCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
   const animating = useRef(false);
   const reduced = useReducedMotion();
-  const isMobile = useMediaQuery("(max-width: 1023px)");
+  const isMobile = useMediaQuery("(max-width: 767px)");
   const total = popularDishes.length;
   const activeDish = popularDishes[activeIndex];
   const bg = carouselBackgrounds[activeDish.background];
@@ -119,7 +119,7 @@ export function DishCarousel() {
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-fresh">
           {activeDish.category}
         </p>
-        <h3 className="mt-2 font-display text-2xl uppercase leading-[0.95] text-forest-deep sm:text-4xl lg:text-[2.75rem]">
+        <h3 className="mt-2 font-display text-2xl uppercase leading-[0.95] text-forest-deep max-lg:sm:text-3xl lg:text-4xl lg:text-[2.75rem]">
           {activeDish.name}
         </h3>
         <p className="mt-3 text-sm leading-relaxed text-charcoal/75 sm:mt-4 sm:text-base">
@@ -177,7 +177,7 @@ export function DishCarousel() {
 
   return (
     <div className="relative mt-2 lg:mt-6">
-      <div className="mb-4 flex items-center justify-center gap-3 sm:justify-end lg:absolute lg:right-0 lg:top-[-4.5rem] lg:mb-0">
+      <div className="mb-4 flex items-center justify-center gap-3 max-lg:sm:justify-end lg:absolute lg:right-0 lg:top-[-4.5rem] lg:mb-0">
         <button
           type="button"
           onClick={() => go(-1)}
@@ -197,25 +197,25 @@ export function DishCarousel() {
       </div>
 
       <div className="flex flex-col gap-6 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(200px,240px)] lg:items-center lg:gap-12 xl:grid-cols-[minmax(0,1fr)_260px]">
-        <div className="relative order-1 mx-auto w-full max-w-[100vw] overflow-hidden px-1 sm:px-0 lg:max-w-none lg:overflow-visible">
-          <div className="relative mx-auto h-[270px] w-full max-w-[min(100%,360px)] sm:h-[420px] sm:max-w-none lg:h-[580px] xl:h-[620px]">
+        <div className="relative order-1 mx-auto w-full max-w-[100vw] overflow-hidden px-1 max-lg:sm:px-0 lg:max-w-none lg:overflow-visible">
+          <div className="relative mx-auto h-[270px] w-full max-w-[min(100%,360px)] max-lg:sm:h-[400px] max-lg:sm:max-w-none lg:h-[580px] lg:max-w-none xl:h-[620px]">
             <motion.div
-              className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-[min(72vw,250px)] w-[min(72vw,250px)] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-[0.4] sm:h-[min(88vw,400px)] sm:w-[min(88vw,400px)] sm:opacity-[0.35] lg:top-[48%] lg:h-[min(95vw,720px)] lg:w-[min(95vw,720px)]"
+              className="pointer-events-none absolute left-1/2 z-0 -translate-x-1/2 -translate-y-1/2 rounded-full opacity-[0.35] max-lg:top-1/2 max-lg:h-[min(72vw,250px)] max-lg:w-[min(72vw,250px)] max-lg:opacity-[0.4] max-lg:sm:h-[min(88vw,400px)] max-lg:sm:w-[min(88vw,400px)] max-lg:sm:opacity-[0.35] lg:top-[48%] lg:h-[min(95vw,720px)] lg:w-[min(95vw,720px)]"
               animate={{ backgroundColor: bg }}
               transition={{ duration: 0.7 }}
               aria-hidden
             />
             <div
-              className="pointer-events-none absolute left-1/2 top-1/2 hidden h-[min(88vw,640px)] w-[min(88vw,640px)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-forest-deep/10 sm:block lg:top-[48%]"
+              className="pointer-events-none absolute left-1/2 z-0 -translate-x-1/2 -translate-y-1/2 rounded-full border border-forest-deep/10 max-lg:top-1/2 max-lg:hidden max-lg:sm:block max-lg:sm:h-[min(88vw,640px)] max-lg:sm:w-[min(88vw,640px)] lg:top-[48%] lg:h-[min(88vw,640px)] lg:w-[min(88vw,640px)]"
               aria-hidden
             />
             <div
-              className="pointer-events-none absolute left-1/2 top-1/2 hidden h-[min(72vw,520px)] w-[min(72vw,520px)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-forest-deep/5 lg:top-[48%] lg:block"
+              className="pointer-events-none absolute left-1/2 top-[48%] z-0 hidden h-[min(72vw,520px)] w-[min(72vw,520px)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-forest-deep/5 lg:block"
               aria-hidden
             />
 
             <p
-              className="pointer-events-none absolute left-0 top-2 font-display text-[clamp(3.5rem,14vw,5rem)] uppercase leading-none text-forest-deep/[0.06] sm:left-4 sm:top-0 sm:text-[clamp(5rem,16vw,11rem)] lg:left-8"
+              className="pointer-events-none absolute left-4 top-0 font-display text-[clamp(3.5rem,14vw,5rem)] uppercase leading-none text-forest-deep/[0.06] max-lg:sm:left-4 max-lg:sm:top-0 max-lg:sm:text-[clamp(5rem,16vw,11rem)] lg:left-8 lg:text-[clamp(5rem,16vw,11rem)]"
               aria-hidden
             >
               {String(activeIndex + 1).padStart(2, "0")}
@@ -285,8 +285,8 @@ export function DishCarousel() {
         </div>
 
         <div className="order-2 flex flex-col gap-5 lg:order-none lg:gap-8 lg:pt-4">
-          <div className="order-2 lg:order-1">{dishPills}</div>
-          <div className="order-1 lg:order-2">{dishCopy}</div>
+          <div className="max-lg:order-2">{dishPills}</div>
+          <div className="max-lg:order-1">{dishCopy}</div>
         </div>
       </div>
 
